@@ -1,0 +1,44 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int val=0, ListNode next=null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode MergeKLists(ListNode[] lists) 
+    {
+        ListNode result = new ListNode(-1);
+        ListNode head = result;
+        //value, index
+        var heap = new SortedSet<(int, int)>();
+        for(int i = 0; i < lists.Length; i++)
+        {
+            if(lists[i] != null)
+            {
+                heap.Add((lists[i].val, i));   
+            }
+        }
+        
+        while(heap.Count > 0)
+        {
+            var min = heap.Min;
+            heap.Remove(min);
+            var value = min.Item1;
+            var index = min.Item2;
+            head.next = lists[index];
+            if(lists[index].next != null)
+            {
+                lists[index] = lists[index].next;
+                heap.Add((lists[index].val, index));
+            }
+            head = head.next;
+        }
+        
+        return result.next;
+    }
+}
