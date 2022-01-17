@@ -1,0 +1,35 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode GetIntersectionNode(ListNode headA, ListNode headB) 
+    {
+        ListNode point = null;
+        var set = new HashSet<ListNode>();
+        var current = headA;
+        
+        while(current != null)
+        {
+            set.Add(current);
+            current = current.next;
+        }
+        
+        current = headB;
+        while(current != null)
+        {
+            if(set.Contains(current))
+            {
+                point = current;
+                break;
+            }
+            current = current.next;
+        }
+        
+        return point;
+    }
+}
