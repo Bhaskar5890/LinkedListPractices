@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    IList<TreeNode> list = null;
+    public void Flatten(TreeNode root) 
+    {
+        list= new List<TreeNode>();
+        CreatePreOrder(root);
+        for(int i = 0; i < list.Count-1; i++)
+        {
+            list[i].right = list[i+1];
+            list[i].left = null;
+        }
+    }
+    
+    public void CreatePreOrder(TreeNode root)
+    {
+        if(root == null)
+        {
+            return;
+        }
+        
+        list.Add(root);
+        CreatePreOrder(root.left);
+        CreatePreOrder(root.right);
+    }
+}
